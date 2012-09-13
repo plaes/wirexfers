@@ -23,6 +23,7 @@ WireTransfers library.
    :maxdepth: 2
 
    user/intro
+   user/flask_quickstart
 
 API Documentation
 -----------------
