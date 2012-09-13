@@ -10,7 +10,7 @@ class ProviderBase(object):
 
     def __init__(self, user, private_key, private_pass, public_key, endpoint, extra_info={}):
 
-        #: Client code provided by Bank.
+        #: User id for payment processor.
         self.user = user
 
         #: Endpoint address used to initiate payment requests.
@@ -25,8 +25,8 @@ class ProviderBase(object):
         #: Public key as an RSA key object (:py:class:`Crypto.PublicKey.RSA._RSAobj`)
         self.pubkey = public_key
 
-        #: Dictionary mapping containing extra user-supplied information
-        #: Can be used things like supplying bank homepage, etc.
+        #: Dictionary mapping containing extra user-supplied information.
+        #: Can be used things like supplying provider url, etc.
         self.extra_info = extra_info
 
     def create_request(self, payment):
