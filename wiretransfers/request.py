@@ -28,7 +28,7 @@ class PaymentRequest(object):
     def __init__(self, provider, info):
         # TODO: handle return urls, language, payment receiver's account info
 
-        #: Payment provider :class:`wiretransfers.provider.ProviderBase`.
+        #: Payment provider :class:`wiretransfers.providers.ProviderBase`.
         self.provider = provider
 
         #: Payment information as :class:`wiretransfers.PaymentInfo`.
