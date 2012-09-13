@@ -79,21 +79,55 @@ Making the payment request
 --------------------------
 
 In order to make a payment, we first need to create payment information
-by filling out relevant fields of :class:`~wiretransfers.PaymentInfo`. Then
-we can just call our previously set up ``provider`` to create the payment
-request (:class:`~wiretransfers.PaymentRequest`) for us.
-
-Finally we just pass the ``payment_request`` to the template. So let's
-modify our ``index`` function a bit:
+by filling out relevant fields of :class:`~wiretransfers.PaymentInfo`:
 
 .. code-block:: python
-   :emphasize-lines: 5-7
+   :emphasize-lines: 5
 
     # [ rest of our flask app ]
 
     @app.route('/')
     def index():
         info = PaymentInfo('1.00', 'Test transfer', utils.ref_731('123'))
+        return 'Hello!'
+
+    # [ rest of our flask app ]
+
+Next we need to decide our return urls. Though we currently don't yet
+handle the urls, we just need to provide them to make the payment request.
+Therefore we utilize the Flask's :meth:`~Flask.url_for()` with
+``_external=True`` argument to make the URLs absolute and set the ``return``
+URL pointing to the ``index`` view:
+
+.. code-block:: python
+   :emphasize-lines: 1,8
+
+    from flask import Flask, render_template, url_for
+    from wiretransfers import PaymentInfo, utils
+    # [ rest of our flask app ]
+
+    @app.route('/')
+    def index():
+        info = PaymentInfo('1.00', 'Test transfer', utils.ref_731('123'))
+        urls = {'return': url_for('index', _external=True)}
+        return 'Hello!'
+
+    # [ rest of our flask app ]
+
+After everything has been set up, we can just call our previously initialized
+``provider`` passing payment info and return urls as arguments in order to
+create the payment request (:class:`~wiretransfers.PaymentRequest`) for us.
+And finally we just pass it to the template renderer:
+
+.. code-block:: python
+   :emphasize-lines: 7-8
+
+    # [ rest of our flask app ]
+
+    @app.route('/')
+    def index():
+        info = PaymentInfo('1.00', 'Test transfer', utils.ref_731('123'))
+        urls = {'return': url_for('index', _external=True)}
         payment_request = provider(info)
         return render_template('form.html', payment=payment_request)
 
@@ -122,3 +156,8 @@ HTML form:
     <input type="submit">
     </form>
 
+
+Handling the Payment response
+-----------------------------
+
+TODO!!!

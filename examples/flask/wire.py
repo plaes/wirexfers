@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 from wiretransfers import PaymentInfo, utils
 from wiretransfers.providers import ProviderBase
 
@@ -12,7 +12,8 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     info = PaymentInfo('1.00', 'Test transfer', utils.ref_731('123'))
-    payment = provider(info)
+    urls = {'return': url_for('index', _external=True)}
+    payment = provider(info, urls)
     return render_template('form.html', payment=payment)
 
 if __name__ == '__main__':
