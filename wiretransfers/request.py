@@ -46,7 +46,7 @@ class PaymentRequest(object):
         #: :class:`~wiretransfers.PaymentInfo` containing various payment information (sum, etc..)
         self.info = info
 
-        if 'return' not in return_urls.keys:
+        if 'return' not in return_urls:
             raise ValueError
 
         #: List containing ``(name, value)`` tuples for HTML form setup.
