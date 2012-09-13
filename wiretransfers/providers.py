@@ -26,21 +26,22 @@ class ProviderBase(object):
         #self.private_pass = private_pass
 
         #: RSA public key (:py:class:`Crypto.PublicKey.RSA._RSAobj`) object
+        #: See :func:`wiretransfers.utils.load_key`.
         self.public_key = public_key
 
-        #: Dictionary mapping containing extra user-supplied information.
+        #: Dictionary containing extra user-supplied information.
         #: Can be used for supplying provider url, etc.
         self.extra_info = extra_info
 
-    def __call__(self, payment):
+    def __call__(self, payment, return_urls):
         """
         Creates and returns a payment request.
 
         :param payment: payment information
-        :type payment: :class:`wiretransfers.PaymentInfo`
-        :rtype: :class:`wiretransfers.PaymentRequest`
+        :type payment: :class:`~wiretransfers.PaymentInfo`
+        :rtype: :class:`~wiretransfers.PaymentRequest`
         """
-        return PaymentRequest(self, payment)
+        return PaymentRequest(self, payment, return_urls)
 
     def parse_response(self, args):
         pass
