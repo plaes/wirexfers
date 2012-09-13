@@ -136,7 +136,7 @@ And finally we just pass it to the template renderer:
 Now let's create a template under ``templates/form.html``. As we passed
 the the ``payment_request`` into template context as ``payment`` variable,
 we can now use :attr:`~wiretransfers.PaymentRequest.form`,
-:attr:`~wiretransfers.PaymentRequest.payment` and
+:attr:`~wiretransfers.PaymentRequest.info` and
 :attr:`~wiretransfers.PaymentRequest.provider` fields to create a simple
 HTML form:
 
