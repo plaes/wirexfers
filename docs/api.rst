@@ -8,7 +8,7 @@ This part of the documentation covers all the interfaces of WireTransfers.
 Base Classes
 ~~~~~~~~~~~~
 
-.. autoclass:: wiretransfers.provider.ProviderBase
+.. autoclass:: wiretransfers.providers.ProviderBase
    :inherited-members:
 
 .. autoclass:: wiretransfers.PaymentRequest
@@ -22,3 +22,9 @@ Utility Classes
 
 .. autoclass:: wiretransfers.PaymentInfo
    :inherited-members:
+
+Utility Functions
+~~~~~~~~~~~~~~~~~
+
+.. automodule:: wiretransfers.utils
+   :members:

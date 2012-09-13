@@ -15,7 +15,7 @@ from Crypto.Signature import PKCS1_v1_5
 class PaymentInfo(object):
     """Payment information required for :class:`wiretransfers.PaymentRequest`."""
     def __init__(self, amount, message, refnum):
-        #: Payment amount as string, decimal point separator is ``.``.
+        #: Payment amount as string, uses ``.`` as decimal point separator.
         self.amount = amount
         #: Message used for payment description.
         self.message = message

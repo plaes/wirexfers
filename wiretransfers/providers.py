@@ -8,7 +8,7 @@ This module contains the payment provider implementations for Wiretransfers.
 class ProviderBase(object):
     """Base class that all provider implementations derive from."""
 
-    def __init__(self, user, private_key, private_pass, public_key, endpoint, extra_info={}):
+    def __init__(self, user, private_key, public_key, endpoint, extra_info={}):
 
         #: User id for payment processor.
         self.user = user
@@ -16,17 +16,18 @@ class ProviderBase(object):
         #: Endpoint address used to initiate payment requests.
         self.endpoint = endpoint
 
-        #: Private key as an RSA key object (:py:class:`Crypto.PublicKey.RSA._RSAobj`)
+        #: RSA private key (:py:class:`Crypto.PublicKey.RSA._RSAobj`) object.
+        #: See :func:`wiretransfers.utils.load_key`.
         self.private_key = private_key
 
-        #: Private key password
-        self.private_pass = private_pass
+        ##: Private key password
+        #self.private_pass = private_pass
 
-        #: Public key as an RSA key object (:py:class:`Crypto.PublicKey.RSA._RSAobj`)
-        self.pubkey = public_key
+        #: RSA public key (:py:class:`Crypto.PublicKey.RSA._RSAobj`) object
+        self.public_key = public_key
 
         #: Dictionary mapping containing extra user-supplied information.
-        #: Can be used things like supplying provider url, etc.
+        #: Can be used for supplying provider url, etc.
         self.extra_info = extra_info
 
     def create_request(self, payment):
