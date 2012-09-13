@@ -1,0 +1,13 @@
+<form method="POST" action="{{ payment.provider.endpoint }}">
+{% for item in payment.form -%}
+    {% set name, value = item -%}
+    <input name="{{ name }}" value="{{ value }}" type="hidden">
+{% endfor -%}
+<dl>
+  <dt>Amount:</dt>
+  <dd>{{ payment.info.amount }}</dd>
+  <dt>Message:</dt>
+  <dd>{{ payment.info.message }}</dd>
+</dl>
+<input type="submit">
+</form>
