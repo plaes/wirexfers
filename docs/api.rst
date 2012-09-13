@@ -5,12 +5,11 @@ API
 
 This part of the documentation covers all the interfaces of WireTransfers.
 
-.. autoclass:: wiretransfers.provider.ProviderBase
-   :inherited-members:
-
-
 Classes
 ~~~~~~~
+
+.. autoclass:: wiretransfers.provider.ProviderBase
+   :inherited-members:
 
 .. autoclass:: wiretransfers.request.PaymentRequest
    :inherited-members:
