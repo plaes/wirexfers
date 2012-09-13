@@ -25,14 +25,14 @@ class PaymentInfo(object):
 class PaymentRequest(object):
     """PaymentRequests class."""
 
-    def __init__(self, provider, payment):
+    def __init__(self, provider, info):
         # TODO: handle return urls, language, payment receiver's account info
 
         #: Payment provider :class:`wiretransfers.provider.ProviderBase`.
         self.provider = provider
 
         #: Payment information as :class:`wiretransfers.PaymentInfo`.
-        self.payment = payment
+        self.info = info
 
         #: List containing ``(name, value)`` tuples for HTML form setup.
         self.form = self._sign_form
@@ -45,10 +45,10 @@ class PaymentRequest(object):
                   ('VK_VERSION', u'008'),
                   ('VK_SND_ID',  self.provider.user),
                   ('VK_STAMP',   '%d' % int(time())),
-                  ('VK_AMOUNT',  self.payment.amount),
+                  ('VK_AMOUNT',  self.info.amount),
                   ('VK_CURR',    u'EUR'),
-                  ('VK_REF',     self.payment.refnum),
-                  ('VK_MSG',     self.payment.message)]
+                  ('VK_REF',     self.info.refnum),
+                  ('VK_MSG',     self.info.message)]
 
         ## MAC calculation for request 1002
         mac_fields = ('SERVICE', 'VERSION', 'SND_ID', \
@@ -56,7 +56,6 @@ class PaymentRequest(object):
         f = lambda x: dict(fields).get('VK_%s' % x)
 
         mac = u''.join(map(lambda k: '%03d%s' % (len(f(k)), f(k)), mac_fields))
-        print mac
         fields.append(('VK_MAC', b64encode( \
                     PKCS1_v1_5.new(self.provider.private_key).sign(SHA.new(mac)))))
         return fields

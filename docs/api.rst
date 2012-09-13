@@ -11,6 +11,8 @@ Base Classes
 .. autoclass:: wiretransfers.providers.ProviderBase
    :inherited-members:
 
+.. automethod:: wiretransfers.providers.ProviderBase.__call__
+
 .. autoclass:: wiretransfers.PaymentRequest
    :inherited-members:
 

@@ -5,6 +5,8 @@ wiretransfers.provider
 
 This module contains the payment provider implementations for Wiretransfers.
 """
+from wiretransfers import PaymentRequest
+
 class ProviderBase(object):
     """Base class that all provider implementations derive from."""
 
@@ -30,8 +32,15 @@ class ProviderBase(object):
         #: Can be used for supplying provider url, etc.
         self.extra_info = extra_info
 
-    def create_request(self, payment):
-        pass
+    def __call__(self, payment):
+        """
+        Creates and returns a payment request.
+
+        :param payment: payment information
+        :type payment: :class:`wiretransfers.PaymentInfo`
+        :rtype: :class:`wiretransfers.PaymentRequest`
+        """
+        return PaymentRequest(self, payment)
 
     def parse_response(self, args):
         pass
