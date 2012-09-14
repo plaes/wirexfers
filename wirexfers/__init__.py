@@ -7,7 +7,7 @@ WireXfers is an online payments library, written in Python, providing
 a simple common API for various online payment protocols (IPizza,
 Solo/TUPAS).
 
-:copyright: (c) 2012 by Priit Laes
+:copyright: (c) 2012 Priit Laes
 :license: ISC, see LICENSE for more details.
 """
 
