@@ -16,7 +16,7 @@ from . import ProviderBase
 class IPizzaProviderBase(ProviderBase):
     """Base class for IPizza protocol provider."""
 
-    def _sign_form(self, info, return_urls):
+    def _sign_request(self, info, return_urls):
         """Create and sign payment request data."""
         # Basic fields
         fields = [('VK_SERVICE', u'1002'),

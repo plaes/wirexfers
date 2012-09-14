@@ -44,4 +44,4 @@ class PaymentRequest(object):
             raise ValueError
 
         #: List containing ``(name, value)`` tuples for HTML form setup.
-        self.form = provider._sign_form(info, return_urls)
+        self.form = provider._sign_request(info, return_urls)

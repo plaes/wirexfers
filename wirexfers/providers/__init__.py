@@ -46,5 +46,6 @@ class ProviderBase(object):
     def parse_response(self, args):
         pass
 
-    def _sign_form(self, info, return_urls):
+    def _sign_request(self, info, return_urls):
+        """Signs the payment request."""
         raise NotImplementedError('Provider should implement its own signing')
