@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for
-from wiretransfers import PaymentInfo, utils
-from wiretransfers.providers import ProviderBase
+from wirexfers import PaymentInfo, utils
+from wirexfers.providers import ProviderBase
 
 private_key = utils.load_key('../_keys_/private_key.pem')
 public_key = utils.load_key('../_keys_/public_key.pem')

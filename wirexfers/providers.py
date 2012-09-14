@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-wiretransfers.provider
+wirexfers.provider
 ~~~~~~~~~~~~~~~~~~~~~~
 
-This module contains the payment provider implementations for Wiretransfers.
+This module contains the payment provider implementations.
 """
-from wiretransfers import PaymentRequest
+from wirexfers import PaymentRequest
 
 class ProviderBase(object):
     """Base class that all provider implementations derive from."""
@@ -19,14 +19,14 @@ class ProviderBase(object):
         self.endpoint = endpoint
 
         #: RSA private key (:py:class:`Crypto.PublicKey.RSA._RSAobj`) object.
-        #: See :func:`wiretransfers.utils.load_key`.
+        #: See :func:`wirexfers.utils.load_key`.
         self.private_key = private_key
 
         ##: Private key password
         #self.private_pass = private_pass
 
         #: RSA public key (:py:class:`Crypto.PublicKey.RSA._RSAobj`) object
-        #: See :func:`wiretransfers.utils.load_key`.
+        #: See :func:`wirexfers.utils.load_key`.
         self.public_key = public_key
 
         #: Dictionary containing extra user-supplied information.
@@ -38,8 +38,8 @@ class ProviderBase(object):
         Creates and returns a payment request.
 
         :param payment: payment information
-        :type payment: :class:`~wiretransfers.PaymentInfo`
-        :rtype: :class:`~wiretransfers.PaymentRequest`
+        :type payment: :class:`~wirexfers.PaymentInfo`
+        :rtype: :class:`~wirexfers.PaymentRequest`
         """
         return PaymentRequest(self, payment, return_urls)
 

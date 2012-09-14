@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# WireTransfers documentation build configuration file, created by
+# WireXfers documentation build configuration file, created by
 # sphinx-quickstart on Thu Sep 13 07:37:27 2012.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -18,8 +18,8 @@ import sys, os
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 
 sys.path.insert(0, os.path.abspath('..'))
-import wiretransfers
-from wiretransfers import __version__
+import wirexfers
+from wirexfers import __version__
 
 # -- General configuration -----------------------------------------------------
 
@@ -43,7 +43,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'WireTransfers'
+project = u'WireXfers'
 copyright = u'2012, Priit Laes'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -167,7 +167,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'WireTransfersdoc'
+htmlhelp_basename = 'WireXfersdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -186,7 +186,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'WireTransfers.tex', u'WireTransfers Documentation',
+  ('index', 'WireXfers.tex', u'WireXfers Documentation',
    u'Priit Laes', 'manual'),
 ]
 
@@ -216,7 +216,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'wiretransfers', u'WireTransfers Documentation',
+    ('index', 'wirexfers', u'WireXfers Documentation',
      [u'Priit Laes'], 1)
 ]
 
@@ -230,8 +230,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'WireTransfers', u'WireTransfers Documentation',
-   u'Priit Laes', 'WireTransfers', 'One line description of project.',
+  ('index', 'WireXfers', u'WireXfers Documentation',
+   u'Priit Laes', 'WireXfers', 'Simple Online Payments',
    'Miscellaneous'),
 ]
 
@@ -248,7 +248,7 @@ texinfo_documents = [
 # -- Options for Epub output ---------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'WireTransfers'
+epub_title = u'WireXfers'
 epub_author = u'Priit Laes'
 epub_publisher = u'Priit Laes'
 epub_copyright = u'2012, Priit Laes'

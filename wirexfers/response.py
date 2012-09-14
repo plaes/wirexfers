@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-wiretransfers.response
+wirexfers.response
 ~~~~~~~~~~~~~~~~~~~~~~
 
-This module implements a PaymentResponse object which allows us to validate
-payment responses.
+This module implements a PaymentResponse class used for payment validation.
 """
 
 class PaymentResponse(object):

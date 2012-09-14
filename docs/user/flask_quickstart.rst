@@ -1,7 +1,7 @@
 Flask Quickstart
 ================
 
-This section should give you an introduction of integrating WireTransfers
+This section should give you an introduction of integrating WireXfers
 into a `Flask <http://flask.pocoo.org>`_ application and therefore it
 assumes that you have Flask installed.
 
@@ -28,7 +28,7 @@ a simple barebones Flask application with required imports:
         app.run(debug=True)
 
 Just save it as ``testapp.py``. Just make sure it's not called ``flask.py``
-or ``wiretransfers.py`` because it would break everything. Now try executing
+or ``wirexfers.py`` because it would break everything. Now try executing
 it with your Python interpreter (please note that output on your machine
 might be a bit different):
 
@@ -42,16 +42,16 @@ Setting up the provider
 
 First, we have to make sure that required interfaces are available in our
 Flask application. Therefore we need to import
-:class:`wiretransfers.providers.ProviderBase` and
-:class:`wiretransfers.PaymentInfo`. It's also nice to have
-:mod:`wiretransfers.utils` available.
+:class:`wirexfers.providers.ProviderBase` and
+:class:`wirexfers.PaymentInfo`. It's also nice to have
+:mod:`wirexfers.utils` available.
 
 .. code-block:: python
     :emphasize-lines: 2,3
 
     from flask import Flask, render_template
-    from wiretransfers import PaymentInfo, utils
-    from wiretransfers.providers import ProviderBase
+    from wirexfers import PaymentInfo, utils
+    from wirexfers.providers import ProviderBase
 
     app = Flask(__name__)
     # [rest of our flask app]
@@ -63,8 +63,8 @@ the provider. We also need to supply ``user`` and ``endpoint`` address:
     :emphasize-lines: 5-7
 
     from flask import Flask, render_template
-    from wiretransfers import PaymentInfo, utils
-    from wiretransfers.providers import ProviderBase
+    from wirexfers import PaymentInfo, utils
+    from wirexfers.providers import ProviderBase
 
     private_key = utils.load_key('../_keys_/private_key.pem')
     public_key = utils.load_key('../_keys_/public_key.pem')
@@ -79,7 +79,7 @@ Making the payment request
 --------------------------
 
 In order to make a payment, we first need to create payment information
-by filling out relevant fields of :class:`~wiretransfers.PaymentInfo`:
+by filling out relevant fields of :class:`~wirexfers.PaymentInfo`:
 
 .. code-block:: python
    :emphasize-lines: 5
@@ -103,7 +103,7 @@ URL pointing to the ``index`` view:
    :emphasize-lines: 1,8
 
     from flask import Flask, render_template, url_for
-    from wiretransfers import PaymentInfo, utils
+    from wirexfers import PaymentInfo, utils
     # [ rest of our flask app ]
 
     @app.route('/')
@@ -116,7 +116,7 @@ URL pointing to the ``index`` view:
 
 After everything has been set up, we can just call our previously initialized
 ``provider`` passing payment info and return urls as arguments in order to
-create the payment request (:class:`~wiretransfers.PaymentRequest`) for us.
+create the payment request (:class:`~wirexfers.PaymentRequest`) for us.
 And finally we just pass it to the template renderer:
 
 .. code-block:: python
@@ -135,9 +135,9 @@ And finally we just pass it to the template renderer:
 
 Now let's create a template under ``templates/form.html``. As we passed
 the the ``payment_request`` into template context as ``payment`` variable,
-we can now use :attr:`~wiretransfers.PaymentRequest.form`,
-:attr:`~wiretransfers.PaymentRequest.info` and
-:attr:`~wiretransfers.PaymentRequest.provider` fields to create a simple
+we can now use :attr:`~wirexfers.PaymentRequest.form`,
+:attr:`~wirexfers.PaymentRequest.info` and
+:attr:`~wirexfers.PaymentRequest.provider` fields to create a simple
 HTML form:
 
 .. code-block:: html+jinja

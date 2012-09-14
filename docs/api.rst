@@ -3,30 +3,30 @@
 API
 ===
 
-This part of the documentation covers all the interfaces of WireTransfers.
+This part of the documentation covers all the interfaces of WireXfers.
 
 Base Classes
 ~~~~~~~~~~~~
 
-.. autoclass:: wiretransfers.providers.ProviderBase
+.. autoclass:: wirexfers.providers.ProviderBase
    :inherited-members:
 
-.. automethod:: wiretransfers.providers.ProviderBase.__call__
+.. automethod:: wirexfers.providers.ProviderBase.__call__
 
-.. autoclass:: wiretransfers.PaymentRequest
+.. autoclass:: wirexfers.PaymentRequest
    :inherited-members:
 
-.. autoclass:: wiretransfers.PaymentResponse
+.. autoclass:: wirexfers.PaymentResponse
    :inherited-members:
 
 Utility Classes
 ~~~~~~~~~~~~~~~
 
-.. autoclass:: wiretransfers.PaymentInfo
+.. autoclass:: wirexfers.PaymentInfo
    :inherited-members:
 
 Utility Functions
 ~~~~~~~~~~~~~~~~~
 
-.. automodule:: wiretransfers.utils
+.. automodule:: wirexfers.utils
    :members:

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-wiretransfers.utils
+wirexfers.utils
 ~~~~~~~~~~~~~~~~~~~
 
 This module provides utility functions that are used within
-Wiretransfers, but might be also useful externally.
+WireXfers, but might be also useful externally.
 
 """
 from Crypto.PublicKey import RSA

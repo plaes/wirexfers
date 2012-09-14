@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-wiretransfers.request
+wirexfers.request
 ~~~~~~~~~~~~~~~~~~~~~
 
 This module implements a PaymentRequest class which provides us the
@@ -13,7 +13,7 @@ from Crypto.Hash import SHA
 from Crypto.Signature import PKCS1_v1_5
 
 class PaymentInfo(object):
-    """Payment information required for :class:~`wiretransfers.PaymentRequest`."""
+    """Payment information required for :class:~`wirexfers.PaymentRequest`."""
     def __init__(self, amount, message, refnum):
         #: Payment amount as string, uses ``.`` as decimal point separator.
         self.amount = amount
@@ -26,9 +26,9 @@ class PaymentRequest(object):
     """PaymentRequest class.
 
     :param provider: Payment provider
-    :type provider: :class:`wiretransfers.providers.ProviderBase`.
+    :type provider: :class:`~wirexfers.providers.ProviderBase`.
     :param info: Payment information
-    :type info: :class:`wiretransfers.PaymentInfo`.
+    :type info: :class:`~wirexfers.PaymentInfo`.
     :param return_urls: Dictionary of return URLs. Depends on the specific
                         provider, but generally ``{'return': ... }`` is
                         required.
@@ -40,10 +40,10 @@ class PaymentRequest(object):
     def __init__(self, provider, info, return_urls):
         # TODO: language, payment receiver's account info
 
-        #: :class:`~wiretransfers.providers.ProviderBase` that handles the payment request.
+        #: :class:`~wirexfers.providers.ProviderBase` that handles the payment request.
         self.provider = provider
 
-        #: :class:`~wiretransfers.PaymentInfo` containing various payment information (sum, etc..)
+        #: :class:`~wirexfers.PaymentInfo` containing various payment information (sum, etc..)
         self.info = info
 
         if 'return' not in return_urls:

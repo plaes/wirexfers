@@ -1,7 +1,7 @@
-WireTransfers
-=============
+WireXfers [waɪətrænsfɜːz]
+=========================
 
-Wiretransfers is an online payments library, written in Python, supporting
+WireXfers is an online payments library, written in Python, supporting
 various online payment protocols (IPizza, Solo/TUPAS) using a simple API.
 
 Features
