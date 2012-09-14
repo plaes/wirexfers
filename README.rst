@@ -1,5 +1,5 @@
-WireXfers [waɪətrænsfɜːz]
-=========================
+WireXfers [waɪə trænsfɜːz]
+==========================
 
 WireXfers is an online payments library, written in Python, supporting
 various online payment protocols (IPizza, Solo/TUPAS) using a simple API.
@@ -12,12 +12,12 @@ Features
 Installation
 ------------
 
-To install wiretransfers, simply: ::
+To install WireXfers, simply: ::
 
-    $ pip install wiretransfers
+    $ pip install wirexfers
 
 Or, if you absolutely must: ::
 
-    $ easy_install wiretransfers
+    $ easy_install wirexfers
 
 But, you really shouldn't do that.

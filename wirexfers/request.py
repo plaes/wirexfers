@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 wirexfers.request
-~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 This module implements a PaymentRequest class which provides us the
 payment request forms.

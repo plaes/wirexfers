@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 wirexfers.utils
-~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 This module provides utility functions that are used within
 WireXfers, but might be also useful externally.

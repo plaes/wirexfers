@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import os, sys
-import wiretransfers
+import wirexfers
 
 try:
     from setuptools import setup
@@ -15,7 +15,7 @@ if sys.argv[-1] == 'publish':
 os.environ['PYTHONDONTWRITEBYTECODE'] = '1'
 
 packages = [
-    'wiretransfers',
+    'wirexfers',
 ]
 
 requires = [
@@ -23,17 +23,17 @@ requires = [
 ]
 
 setup(
-    name='wiretransfers',
-    version=wiretransfers.__version__,
+    name='wirexfers',
+    version=wirexfers.__version__,
     description='Simple API for IPizza Solo/TUPAS payment protocols.',
     long_description=open('README.rst').read() + '\n\n' +
                      open('HISTORY.rst').read(),
     author='Priit Laes',
     author_email='plaes@plaes.org',
-    url='http://plaes.org/projects/wiretransfers',
+    url='http://plaes.org/projects/wirexfers',
     packages=packages,
     package_data={'': ['LICENSE']},
-    package_dir={'wiretransfers': 'wiretransfers'},
+    package_dir={'wirexfers': 'wirexfers'},
     include_package_data=True,
     install_requires=requires,
     license=open('LICENSE').read(),
@@ -44,6 +44,8 @@ setup(
         'License :: OSI Approved :: ISC License (ISCL)',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7',
+        'Topic :: Office/Business :: Financial',
+        'Topic :: Software Development :: Libraries :: Python Modules',
     ),
 )
 

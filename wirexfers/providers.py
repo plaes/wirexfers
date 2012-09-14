@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 wirexfers.provider
-~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
 
 This module contains the payment provider implementations.
 """
