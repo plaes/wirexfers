@@ -41,8 +41,9 @@ class ProviderBase(object):
         """
         return PaymentRequest(self, payment, return_urls)
 
-    def parse_response(self, args):
-        pass
+    def parse_response(self, data):
+        """Parses the payment request."""
+        raise NotImplementedError('Provider should implement its own response handler')
 
     def _sign_request(self, info, return_urls):
         """Signs the payment request."""

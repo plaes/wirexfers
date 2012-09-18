@@ -10,9 +10,17 @@ from time import time
 from Crypto.Hash import MD5
 
 from . import KeyChainBase, ProviderBase
+from .. import PaymentResponse
 
 # Currently only single bank implemented, therefore no generic TUPAS/Solo
 # protocol implementation available.
+
+def MAC_hash(mac_str):
+    """
+    Returns MAC hash value in uppercase hexadecimal form and truncated to
+    32 characters.
+    """
+    return MD5.new(mac_str).hexdigest().upper()[:32]
 
 class SoloKeyChain(KeyChainBase):
 
@@ -68,5 +76,20 @@ class NordeaEEProvider(ProviderBase):
         f = lambda x: dict(fields).get(x)
         k = ('VERSION', 'STAMP', 'RCV_ID', 'AMOUNT', 'REF', 'DATE', 'CUR')
         m = '%s&%s&' % ('&'.join(map(f, k)), self.keychain.mac_key)
-        fields.append(('MAC', MD5.new(m).hexdigest().upper()))
+        fields.append(('MAC', MAC_hash(m)))
         return fields
+
+    def parse_response(self, form):
+        """Parse and return payment response."""
+        # MAC calculation
+        f = lambda x: form.get('RETURN_%s' % x, '')
+        k = ('VERSION', 'STAMP', 'REF', 'PAID')
+        m = '%s&%s&' % ('&'.join(map(f, k)), self.keychain.mac_key)
+        valid = MAC_hash(m) == form.get('RETURN_MAC')
+        # Save worthwhile data from the response
+        data = {}
+        for key in ('REF', 'PAID'):
+            item = data.get('RETURN_%s' % key, None)
+            if item != None:
+                data[key] = item
+        return PaymentResponse(self, valid, data)
