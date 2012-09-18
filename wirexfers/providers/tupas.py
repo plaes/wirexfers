@@ -61,7 +61,7 @@ class NordeaEEProvider(ProviderBase):
                   ('RETURN', return_urls['return']),
                   ('CANCEL', return_urls['cancel']),
                   ('REJECT', return_urls['reject']),
-                  ('CONFIRM', u'NO'),
+                  ('CONFIRM', u'YES'),
                   ('KEYVERS', u'0001'),
                   ('CUR', u'EUR')]
         # MAC calculation
