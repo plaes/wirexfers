@@ -42,7 +42,10 @@ class ProviderBase(object):
         return PaymentRequest(self, payment, return_urls)
 
     def parse_response(self, data):
-        """Parses the payment request."""
+        """Parses the payment request.
+
+        :param form: Raw payment response data.
+        """
         raise NotImplementedError('Provider should implement its own response handler')
 
     def _sign_request(self, info, return_urls):

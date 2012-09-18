@@ -247,8 +247,11 @@ We also create view for invalid response:
         return 'INVALID PAYMENT'
 
 As :class:`~wirexfers.providers.tupas.NordeaEEProvider` uses ``GET`` request
-for payment status confirmation, therefore we just need to parse that in every
-view and check whether it's valid:
+for payment status confirmation, therefore we just need to parse the request
+data in every view with
+:meth:`~wirexfers.providers.ProviderBase.parse_response` into
+:class:`~wirexfers.PaymentResponse` and check whether its
+:attr:`~wirexfers.PaymentResponse.is_valid` attribute is ``True``.
 
 .. code-block:: python
 
@@ -258,3 +261,5 @@ view and check whether it's valid:
         # Do something with the result
         return payment.data
     return redirect(url_for('invalid'))
+
+And that should be all for now! :)
