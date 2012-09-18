@@ -13,11 +13,11 @@ Minimal application
 -------------------
 
 It's probably easiest to start from the beginning, so we start by making
-a simple barebones Flask application with required imports:
+a simple barebones Flask application:
 
 ::
 
-    from flask import Flask, render_template
+    from flask import Flask
     app = Flask(__name__)
 
     @app.route('/')
@@ -40,105 +40,152 @@ might be a bit different):
 Setting up the provider
 -----------------------
 
-First, we have to make sure that required interfaces are available in our
-Flask application. Therefore we need to import
-:class:`wirexfers.providers.ProviderBase` and
-:class:`wirexfers.PaymentInfo`. It's also nice to have
-:mod:`wirexfers.utils` available.
+.. warning::
+
+    In this tutorial we are going to use Nordea Estonia's Solo/TUPAS as an
+    example, mainly because they have official test system available. You still
+    need to figure out a way to acquire credentials for it and this is left as
+    an exercise to the reader. Sorry! ;)
+
+In order to set up a provider, we first need to create a keychain. As payment
+providers use different credential system (private/public key, simple password)
+the keychain is used to hide away the low-level details of credential handling.
+
+:class:`~wirexfers.providers.tupas.NordeaEEProvider` uses
+:class:`~wirexfers.providers.tupas.SoloKeyChain` requiring a single
+bank-provided *MAC-key*:
 
 .. code-block:: python
-    :emphasize-lines: 2,3
 
-    from flask import Flask, render_template
-    from wirexfers import PaymentInfo, utils
-    from wirexfers.providers import ProviderBase
+    from wirexfers.providers.tupas import SoloKeyChain
+    # Replace the '<mac>' argument below!
+    keychain = SoloKeyChain(<mac>)
 
-    app = Flask(__name__)
-    # [rest of our flask app]
+.. note::
 
-Now we can load required private and public keys in order to set up
-the provider. We also need to supply ``user`` and ``endpoint`` address:
+    Previous keychain setup is specific to
+    :class:`~wirexfers.providers.tupas.NordeaEEProvider`. Other providers may
+    require different KeyChain setup. Please consult the documentation of each
+    provider.
+
+
+Now that we have created our keychain, setting up the provider is a breeze:
 
 .. code-block:: python
-    :emphasize-lines: 5-7
 
-    from flask import Flask, render_template
-    from wirexfers import PaymentInfo, utils
-    from wirexfers.providers import ProviderBase
+    from wirexfers.providers.tupas import NordeaEEProvider
+    # Replace the <user> and <endpoint> arguments below!
+    provider = NordeaEEProvider(<user>, keychain, <endpoint>)
 
-    private_key = utils.load_key('../_keys_/private_key.pem')
-    public_key = utils.load_key('../_keys_/public_key.pem')
-    provider = ProviderBase('uuid217657', private_key, public_key, 'https://pangalink.net/banklink/008/ipizza')
+And that's all - now our provider is configured and can be used to initiate
+payment request.
+
+This is what our current application looks like:
+
+.. code-block:: python
+   :emphasize-lines: 2, 5-9
+
+    from flask import Flask
+    from wirexfers.providers.tupas import SoloKeyChain, NordeaEEProvider
 
     app = Flask(__name__)
-    # [rest of our flask app]
 
-Now our provider is configured and can be used to create a payment request.
+    # Replace the '<mac>' argument below!
+    keychain = SoloKeyChain(<mac>)
+    # Replace the <user> and <endpoint> arguments below!
+    provider = NordeaEEProvider(<user>, keychain, <endpoint>)
+
+    @app.route('/')
+    def index():
+        return 'Hello!'
+
+    if __name__ == '__main__':
+        app.run(debug=True)
+
 
 Making the payment request
 --------------------------
 
-In order to make a payment, we first need to create payment information
-by filling out relevant fields of :class:`~wirexfers.PaymentInfo`:
+In order to make a payment, we first need to set up a payment information
+by filling out relevant fields of :class:`~wirexfers.PaymentInfo`. Because the
+payment are usually made within a request, we need to plug it into our view
+function:
 
 .. code-block:: python
-   :emphasize-lines: 5
 
-    # [ rest of our flask app ]
+    from wirexfers import PaymentInfo, utils
+    info = PaymentInfo('1.00', 'Test transfer', utils.ref_731('123'))
 
-    @app.route('/')
-    def index():
-        info = PaymentInfo('1.00', 'Test transfer', utils.ref_731('123'))
-        return 'Hello!'
+Next we need to decide our return urls. Though we currently don't yet handle
+the urls, but they still needed so provider knows where to direct user after
+payment operation.
 
-    # [ rest of our flask app ]
+.. note::
 
-Next we need to decide our return urls. Though we currently don't yet
-handle the urls, we just need to provide them to make the payment request.
-Therefore we utilize the Flask's :meth:`~Flask.url_for()` with
-``_external=True`` argument to make the URLs absolute and set the ``return``
-URL pointing to the ``index`` view:
+    Return url support varies with providers. Please consult each providers
+    documentation to see which return urls are supported.
+
+:class:`~wirexfers.providers.tupas.NordeaEEProvider` requires following return
+urls:
+
+ * ``cancel`` - user cancels the payment
+ * ``reject`` - bank rejects the payment (not enough funds, ...)
+ * ``return`` - successful payment
+
+Although we don't yet handle these URLs, we still need to fill them out because
+payment provider expects them along with payment request.  Therefore we just
+simply point these urls to the ``/index`` view and utilize Flask's
+:meth:`~Flask.url_for()` along with ``_external=True`` argument to make the
+URLs absolute:
 
 .. code-block:: python
-   :emphasize-lines: 1,8
+
+    urls = {'cancel': url_for('index', _external=True),
+            'reject': url_for('index', _external=True),
+            'return': url_for('index', _external=True)}
+
+Now everything has been set up, so we just call our previously initialized
+``provider`` with ``payment`` and ``urls`` arguments in order to create the
+payment request (:class:`~wirexfers.PaymentRequest`) for us:
+
+.. code-block:: python
+
+   payment = provider(info, urls)
+
+This is all from application side, we just have to pass the ``payment`` to the
+template in order to show the payment form to the user:
+
+.. code-block:: python
+   :emphasize-lines: 14-19
 
     from flask import Flask, render_template, url_for
     from wirexfers import PaymentInfo, utils
-    # [ rest of our flask app ]
+    from wirexfers.providers.tupas import SoloKeyChain, NordeaEEProvider
+
+    app = Flask(__name__)
+
+    # Replace the '<mac>' argument below!
+    keychain = SoloKeyChain(<mac>)
+    # Replace the <user> and <endpoint> arguments below!
+    provider = NordeaEEProvider(<user>, keychain, <endpoint>)
 
     @app.route('/')
     def index():
         info = PaymentInfo('1.00', 'Test transfer', utils.ref_731('123'))
-        urls = {'return': url_for('index', _external=True)}
-        return 'Hello!'
+        urls = {'cancel': url_for('index', _external=True),
+                'reject': url_for('index', _external=True),
+                'return': url_for('index', _external=True)}
+        payment = provider(info, urls)
+        return render_template('form.html', payment=payment)
 
-    # [ rest of our flask app ]
+    if __name__ == '__main__':
+        app.run(debug=True)
 
-After everything has been set up, we can just call our previously initialized
-``provider`` passing payment info and return urls as arguments in order to
-create the payment request (:class:`~wirexfers.PaymentRequest`) for us.
-And finally we just pass it to the template renderer:
-
-.. code-block:: python
-   :emphasize-lines: 7-8
-
-    # [ rest of our flask app ]
-
-    @app.route('/')
-    def index():
-        info = PaymentInfo('1.00', 'Test transfer', utils.ref_731('123'))
-        urls = {'return': url_for('index', _external=True)}
-        payment_request = provider(info)
-        return render_template('form.html', payment=payment_request)
-
-    # [ rest of our flask app ]
-
-Now let's create a template under ``templates/form.html``. As we passed
-the the ``payment_request`` into template context as ``payment`` variable,
-we can now use :attr:`~wirexfers.PaymentRequest.form`,
-:attr:`~wirexfers.PaymentRequest.info` and
-:attr:`~wirexfers.PaymentRequest.provider` fields to create a simple
-HTML form:
+We are still missing the template, though! Open up the As we are passing the
+payment request into template context as ``payment`` variable, we can now use
+:attr:`~wirexfers.PaymentRequest.form`, :attr:`~wirexfers.PaymentRequest.info`
+and :attr:`~wirexfers.PaymentRequest.provider` fields to create a simple HTML
+form.  So open up ``templates/form.html`` and make sure it contains this:
 
 .. code-block:: html+jinja
 

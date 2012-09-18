@@ -25,6 +25,15 @@ class NordeaEEProvider(ProviderBase):
     Nordea Bank Finland Plc Eesti/AS Nordea Finance Estonia
     http://www.nordea.ee
 
+    Protocol: Solo/TUPAS
+    KeyChain: :class:`wirexfers.providers.tupas.SoloKeyChain`
+
+    Supported return urls:
+
+     * ``cancel`` - user cancels payment
+     * ``reject`` - bank rejects payment (due to insufficient funds, ...)
+     * ``return`` - payment is successful
+
     Supported protocol version: ``0003``
     """
 
@@ -60,4 +69,3 @@ class NordeaEEProvider(ProviderBase):
         m = '%s&%s&' % ('&'.join(map(f, k)), self.keychain.mac_key)
         fields.append(('MAC', MD5.new(m).hexdigest().upper()))
         return fields
-
