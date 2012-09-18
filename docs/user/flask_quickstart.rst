@@ -205,4 +205,56 @@ form.  So open up ``templates/form.html`` and make sure it contains this:
 Handling the Payment response
 -----------------------------
 
-TODO!!!
+.. warning::
+
+   This section is using :class:`~wirexfers.providers.tupas.NordeaEEProvider`
+   as an example. Consult documentation on how to handle specific provider.
+
+Let's start by adding new views to handle payment different request responses
+and modify our ``urls`` dictionary to use those views:
+
+.. code-block:: python
+    :emphasize-lines: 1-3
+
+    urls = {'cancel': url_for('cancel', _external=True),
+            'reject': url_for('reject', _external=True),
+            'return': url_for('finish', _external=True)}
+
+    @app.route('/cancel')
+    def cancel():
+        return 'Payment cancelled!'
+
+    @app.route('/reject')
+    def reject():
+        return 'Payment rejected!'
+
+    @app.route('/finish')
+    def finish():
+        return 'Payment successful!'
+
+.. note::
+
+   :class:`~wirexfers.providers.tupas.NordeaEEProvider` uses ``GET`` request
+   method to handle payment responses. This may be different for other
+   providers.
+
+We also create view for invalid response:
+
+.. code-block:: python
+
+    @app.route('/invalid')
+    def invalid():
+        return 'INVALID PAYMENT'
+
+As :class:`~wirexfers.providers.tupas.NordeaEEProvider` uses ``GET`` request
+for payment status confirmation, therefore we just need to parse that in every
+view and check whether it's valid:
+
+.. code-block:: python
+
+    from flask import redirect, request
+    payment = provider.parse_response(request.args)
+    if payment.is_valid:
+        # Do something with the result
+        return payment.data
+    return redirect(url_for('invalid'))
