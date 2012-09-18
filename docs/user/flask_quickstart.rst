@@ -51,8 +51,8 @@ In order to set up a provider, we first need to create a keychain. As payment
 providers use different credential system (private/public key, simple password)
 the keychain is used to hide away the low-level details of credential handling.
 
-:class:`~wirexfers.providers.tupas.NordeaEEProvider` uses
-:class:`~wirexfers.providers.tupas.SoloKeyChain` requiring a single
+:class:`wirexfers.providers.tupas.NordeaEEProvider` uses
+:class:`wirexfers.providers.tupas.SoloKeyChain` requiring a single
 bank-provided *MAC-key*:
 
 .. code-block:: python
@@ -78,9 +78,7 @@ Now that we have created our keychain, setting up the provider is a breeze:
     provider = NordeaEEProvider(<user>, keychain, <endpoint>)
 
 And that's all - now our provider is configured and can be used to initiate
-payment request.
-
-This is what our current application looks like:
+payment request. Our current application so far looks like this:
 
 .. code-block:: python
    :emphasize-lines: 2, 5-9

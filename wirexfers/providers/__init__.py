@@ -24,7 +24,7 @@ class ProviderBase(object):
         self.endpoint = endpoint
 
         #: Protocol-specific keychain implementation -
-        #: :class:`wirexfers.KeyChainBase`
+        #: :class:`wirexfers.providers.KeyChainBase`
         self.keychain = keychain
 
         #: Dictionary containing extra user-supplied information.

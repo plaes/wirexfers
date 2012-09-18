@@ -17,24 +17,25 @@ from . import KeyChainBase, ProviderBase
 class SoloKeyChain(KeyChainBase):
 
     def __init__(self, mac_key):
-        #: MAC key used for signing and verifying payment data
+        #: MAC key provided by bank, used for signing and verifying payment data
         self.mac_key = mac_key
 
 class NordeaEEProvider(ProviderBase):
     """
-    Nordea Bank Finland Plc Eesti/AS Nordea Finance Estonia
-    http://www.nordea.ee
+    | Nordea Bank Finland Plc Eesti / AS Nordea Finance Estonia
+    | https://www.nordea.ee
 
-    Protocol: Solo/TUPAS
-    KeyChain: :class:`wirexfers.providers.tupas.SoloKeyChain`
-
+    Protocol
+        Solo/TUPAS
+    KeyChain
+        :class:`wirexfers.providers.tupas.SoloKeyChain`
     Supported return urls:
+        * ``cancel`` - user cancels payment
+        * ``reject`` - bank rejects payment (due to insufficient funds, ...)
+        * ``return`` - payment is successful
 
-     * ``cancel`` - user cancels payment
-     * ``reject`` - bank rejects payment (due to insufficient funds, ...)
-     * ``return`` - payment is successful
-
-    Supported protocol version: ``0003``
+    Supported protocol version:
+        * ``0003``
     """
 
     # TODO: protocol versions: 0004

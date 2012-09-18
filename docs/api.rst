@@ -5,8 +5,27 @@ API
 
 This part of the documentation covers all the interfaces of WireXfers.
 
+Payment Providers
+~~~~~~~~~~~~~~~~~
+
+IPizza
+------
+
+Solo/TUPAS
+----------
+
+.. autoclass:: wirexfers.providers.tupas.SoloKeyChain
+   :inherited-members:
+
+.. autoclass:: wirexfers.providers.tupas.NordeaEEProvider
+   :inherited-members:
+
+
 Base Classes
 ~~~~~~~~~~~~
+
+.. autoclass:: wirexfers.providers.KeyChainBase
+   :inherited-members:
 
 .. autoclass:: wirexfers.providers.ProviderBase
    :inherited-members:
