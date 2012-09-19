@@ -7,7 +7,7 @@ This module implements a PaymentRequest class which provides us the
 payment request forms.
 """
 class PaymentInfo(object):
-    """Payment information required for :class:~`wirexfers.PaymentRequest`."""
+    """Payment information required for :class:`~.PaymentRequest`."""
     def __init__(self, amount, message, refnum):
         #: Payment amount as string, uses ``.`` as decimal point separator.
         self.amount = amount
@@ -34,10 +34,10 @@ class PaymentRequest(object):
     def __init__(self, provider, info, return_urls):
         # TODO: language, payment receiver's account info
 
-        #: :class:`~wirexfers.providers.ProviderBase` that handles the payment request.
+        #: :class:`~.providers.ProviderBase` that handles the payment request.
         self.provider = provider
 
-        #: :class:`~wirexfers.PaymentInfo` containing various payment information (sum, etc..)
+        #: :class:`~.PaymentInfo` containing various payment information (sum, etc..)
         self.info = info
 
         if 'return' not in return_urls:

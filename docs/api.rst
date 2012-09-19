@@ -11,11 +11,23 @@ Payment Providers
 IPizza
 ------
 
+.. autoclass:: wirexfers.providers.ipizza.IPizzaKeyChain
+   :inherited-members:
+
+.. autoclass:: wirexfers.providers.ipizza.IPizzaProviderBase
+   :inherited-members:
+
+IPizza Providers
+................
+
 Solo/TUPAS
 ----------
 
 .. autoclass:: wirexfers.providers.tupas.SoloKeyChain
    :inherited-members:
+
+Solo/TUPAS providers
+....................
 
 .. autoclass:: wirexfers.providers.tupas.NordeaEEProvider
    :inherited-members:

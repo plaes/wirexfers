@@ -36,7 +36,7 @@ class NordeaEEProvider(ProviderBase):
     Protocol
         Solo/TUPAS
     KeyChain
-        :class:`wirexfers.providers.tupas.SoloKeyChain`
+        :class:`~.SoloKeyChain`
     Supported return urls:
         * ``cancel`` - user cancels payment
         * ``reject`` - bank rejects payment (due to insufficient funds, ...)
