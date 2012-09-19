@@ -38,6 +38,13 @@ Base Classes
 .. autoclass:: wirexfers.PaymentResponse
    :inherited-members:
 
+Exceptions
+~~~~~~~~~~
+
+.. automodule:: wirexfers.exc
+   :show-inheritance:
+   :members:
+
 Utility Classes
 ~~~~~~~~~~~~~~~
 

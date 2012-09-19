@@ -79,17 +79,18 @@ class NordeaEEProvider(ProviderBase):
         fields.append(('MAC', MAC_hash(m)))
         return fields
 
-    def parse_response(self, form):
+    def parse_response(self, form, success=False):
         """Parse and return payment response."""
         # MAC calculation
         f = lambda x: form.get('RETURN_%s' % x, '')
         k = ('VERSION', 'STAMP', 'REF', 'PAID')
         m = '%s&%s&' % ('&'.join(map(f, k)), self.keychain.mac_key)
-        valid = MAC_hash(m) == form.get('RETURN_MAC')
+        if MAC_hash(m) != form.get('RETURN_MAC'):
+            raise InvalidResponseError
         # Save worthwhile data from the response
         data = {}
         for key in ('REF', 'PAID'):
             item = data.get('RETURN_%s' % key, None)
             if item != None:
                 data[key] = item
-        return PaymentResponse(self, valid, data)
+        return PaymentResponse(self, data, success)
