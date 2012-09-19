@@ -20,6 +20,15 @@ IPizza
 IPizza Providers
 ................
 
+.. autoclass:: wirexfers.providers.ipizza.LHVEEProvider
+   :inherited-members:
+
+.. autoclass:: wirexfers.providers.ipizza.SEBEEProvider
+   :inherited-members:
+
+.. autoclass:: wirexfers.providers.ipizza.SwedBankEEProvider
+   :inherited-members:
+
 Solo/TUPAS
 ----------
 

@@ -51,14 +51,18 @@ class IPizzaProviderBase(ProviderBase):
                   ('VK_REF',     info.refnum),
                   ('VK_MSG',     info.message)]
 
+        # Check whether provider supplies extra fields
+        if hasattr(self, 'extra_fields'):
+            fields.extend(self.extra_fields)
+
         ## MAC calculation for request 1002
         mac_fields = ('SERVICE', 'VERSION', 'SND_ID', \
                       'STAMP', 'AMOUNT', 'CURR', 'REF', 'MSG')
         f = lambda x: dict(fields).get('VK_%s' % x)
 
         # MAC field: ordered fields and their lengths: e.g., '003one003two'
-        mac = u''.join(map(lambda k: '%03d%s' % (len(f(k)), f(k)), mac_fields))
-        # Append extra fields
+        mac = u''.join(map(lambda k: '%03d%s' % (len(f(k).encode('utf-8')), f(k)), mac_fields)).encode('utf-8')
+        # Append mac fields
         fields.append(('VK_MAC', b64encode( \
                     PKCS1_v1_5.new(self.keychain.private_key)
                               .sign(SHA.new(mac)))))
@@ -83,10 +87,62 @@ class IPizzaProviderBase(ProviderBase):
         success = resp == '1101'
         # Parse and validate MAC
         f = lambda x: form.get('VK_%s' % x)
-        m = u''.join(map(lambda k: '%03d%s' % (len(f(k)), f(k)), fields[resp]))
+        m = u''.join(map(lambda k: '%03d%s' % (len(f(k).encode('utf-8')), f(k)), fields[resp])).encode('utf-8')
         if not PKCS1_v1_5.new(self.keychain.public_key) \
                          .verify(SHA.new(m), b64decode(f('MAC'))):
             raise InvalidResponseError
-        # TODO: Handle data...
+        # Save payment data
         data = {}
+        if success:
+            for item in ('T_NO', 'AMOUNT', 'CURR', 'REC_ACC', 'REC_NAME',
+                         'SND_ACC', 'SND_NAME', 'REF', 'MSG', 'T_DATE'):
+                data[item] = f(item)
         return PaymentResponse(self, data, success)
+
+class LHVEEProvider(IPizzaProviderBase):
+    """
+    | AS LHV Pank
+    | https://www.lhv.ee
+
+    Protocol
+        IPizza
+    KeyChain
+        :class:`~.IPizzaKeyChain`
+    Supported return urls:
+        * ``return``
+    Supported protocol version:
+        * ``0003``
+    """
+    extra_fields = (('VK_CHARSET', 'UTF-8'),)
+
+class SEBEEProvider(IPizzaProviderBase):
+    """
+    | AS SEB Pank
+    | http://www.seb.ee
+
+    Protocol
+        IPizza
+    KeyChain
+        :class:`~.IPizzaKeyChain`
+    Supported return urls:
+        * ``return``
+    Supported protocol version:
+        * ``0003``
+    """
+    extra_fields = (('VK_CHARSET', 'UTF-8'),)
+
+class SwedBankEEProvider(IPizzaProviderBase):
+    """
+    | SWEDBANK AS
+    | https://www.swedbank.ee
+
+    Protocol
+        IPizza
+    KeyChain
+        :class:`~.IPizzaKeyChain`
+    Supported return urls:
+        * ``return``
+    Supported protocol version:
+        * ``0003``
+    """
+    extra_fields = (('VK_ENCODING', 'UTF-8'),)
