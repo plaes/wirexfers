@@ -56,18 +56,16 @@ class IPizzaProviderBase(ProviderBase):
             fields.extend(self.extra_fields)
 
         ## MAC calculation for request 1002
-        mac_fields = ('SERVICE', 'VERSION', 'SND_ID', \
-                      'STAMP', 'AMOUNT', 'CURR', 'REF', 'MSG')
-        f = lambda x: dict(fields).get('VK_%s' % x)
-
-        # MAC field: ordered fields and their lengths: e.g., '003one003two'
-        mac = u''.join(map(lambda k: '%03d%s' % (len(f(k).encode('utf-8')), f(k)), mac_fields)).encode('utf-8')
+        m = self._build_mac(('SERVICE', 'VERSION', 'SND_ID', 'STAMP', \
+                             'AMOUNT', 'CURR', 'REF', 'MSG'), dict(fields))
         # Append mac fields
         fields.append(('VK_MAC', b64encode( \
                     PKCS1_v1_5.new(self.keychain.private_key)
-                              .sign(SHA.new(mac)))))
+                              .sign(SHA.new(m)))))
+        # Append return url field(s)
         fields.append(('VK_RETURN', return_urls['return']))
         return fields
+
 
     def parse_response(self, form):
         """Parse and return payment response."""
@@ -86,8 +84,8 @@ class IPizzaProviderBase(ProviderBase):
             raise InvalidResponseError
         success = resp == '1101'
         # Parse and validate MAC
+        m = self._build_mac(fields[resp], form)
         f = lambda x: form.get('VK_%s' % x)
-        m = u''.join(map(lambda k: '%03d%s' % (len(f(k).encode('utf-8')), f(k)), fields[resp])).encode('utf-8')
         if not PKCS1_v1_5.new(self.keychain.public_key) \
                          .verify(SHA.new(m), b64decode(f('MAC'))):
             raise InvalidResponseError
@@ -98,6 +96,12 @@ class IPizzaProviderBase(ProviderBase):
                          'SND_ACC', 'SND_NAME', 'REF', 'MSG', 'T_DATE'):
                 data[item] = f(item)
         return PaymentResponse(self, data, success)
+
+    @staticmethod
+    def _build_mac(fields, data):
+        """Build MAC string ('003one003two') for required fields."""
+        f = lambda x: data.get('VK_%s' % x)
+        return u''.join(map(lambda k: '%03d%s' % (len(f(k).encode('utf-8')), f(k)), fields)).encode('utf-8')
 
 class LHVEEProvider(IPizzaProviderBase):
     """
