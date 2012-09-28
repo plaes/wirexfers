@@ -11,6 +11,7 @@ from Crypto.Hash import MD5
 
 from . import KeyChainBase, ProviderBase
 from .. import PaymentResponse
+from ..exc import InvalidResponseError
 
 # Currently only single bank implemented, therefore no generic TUPAS/Solo
 # protocol implementation available.
