@@ -23,13 +23,7 @@ def _MAC_hash(mac_str):
     """
     return MD5.new(mac_str).hexdigest().upper()[:32]
 
-class SoloKeyChain(KeyChainBase):
-
-    def __init__(self, mac_key):
-        #: MAC key provided by bank, used for signing and verifying payment data
-        self.mac_key = mac_key
-
-class NordeaEEProvider(ProviderBase):
+class EENordeaProvider(ProviderBase):
     """
     | Nordea Bank Finland Plc Eesti / AS Nordea Finance Estonia
     | https://www.nordea.ee
@@ -37,7 +31,7 @@ class NordeaEEProvider(ProviderBase):
     Protocol
         Solo/TUPAS
     KeyChain
-        :class:`~.SoloKeyChain`
+        :class:`~.KeyChain`
     Supported return urls:
         * ``cancel`` - user cancels payment
         * ``reject`` - bank rejects payment (due to insufficient funds, ...)
@@ -46,6 +40,16 @@ class NordeaEEProvider(ProviderBase):
     Supported protocol version:
         * ``0003``
     """
+
+    @staticmethod
+    def from_config(data, extra={}):
+        keychain = EENordeaProvider.KeyChain(data['key'])
+        return EENordeaProvider(data['user'], keychain, data['endpoint'])
+
+    class KeyChain(KeyChainBase):
+        def __init__(self, mac_key):
+            #: MAC key provided by bank, used for signing and verifying payment data
+            self.mac_key = mac_key
 
     # TODO: protocol versions: 0004
     # TODO: CONFIRM

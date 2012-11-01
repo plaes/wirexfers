@@ -14,17 +14,9 @@ from Crypto.Signature import PKCS1_v1_5
 from . import KeyChainBase, ProviderBase
 from .. import PaymentResponse
 from ..exc import InvalidResponseError
+from ..utils import load_key
 
-class IPizzaKeyChain(KeyChainBase):
-
-    def __init__(self, private_key, public_key):
-        #: RSA private key (:py:class:`Crypto.PublicKey.RSA._RSAobj`) object.
-        #: See :func:`wirexfers.utils.load_key`.
-        self.private_key = private_key
-
-        #: RSA public key (:py:class:`Crypto.PublicKey.RSA._RSAobj`) object
-        #: See :func:`wirexfers.utils.load_key`.
-        self.public_key = public_key
+from os import path
 
 class IPizzaProviderBase(ProviderBase):
     """Base class for IPizza protocol provider.
@@ -38,6 +30,17 @@ class IPizzaProviderBase(ProviderBase):
     Supported protocol version:
         * ``008``
     """
+
+    class KeyChain(KeyChainBase):
+
+        def __init__(self, private_key, public_key):
+            #: RSA private key (:py:class:`Crypto.PublicKey.RSA._RSAobj`) object.
+            #: See :func:`wirexfers.utils.load_key`.
+            self.private_key = private_key
+
+            #: RSA public key (:py:class:`Crypto.PublicKey.RSA._RSAobj`) object
+            #: See :func:`wirexfers.utils.load_key`.
+            self.public_key = public_key
 
     def _sign_request(self, info, return_urls):
         """Create and sign payment request data."""
@@ -66,8 +69,7 @@ class IPizzaProviderBase(ProviderBase):
         fields.append(('VK_RETURN', return_urls['return']))
         return fields
 
-
-    def parse_response(self, form):
+    def parse_response(self, form, success=False):
         """Parse and return payment response."""
         fields = {
             # Successful payment
@@ -103,7 +105,7 @@ class IPizzaProviderBase(ProviderBase):
         f = lambda x: data.get('VK_%s' % x)
         return u''.join(map(lambda k: '%03d%s' % (len(f(k).encode('utf-8')), f(k)), fields)).encode('utf-8')
 
-class LHVEEProvider(IPizzaProviderBase):
+class EELHVProvider(IPizzaProviderBase):
     """
     | AS LHV Pank
     | https://www.lhv.ee
@@ -111,7 +113,7 @@ class LHVEEProvider(IPizzaProviderBase):
     Protocol
         IPizza
     KeyChain
-        :class:`~.IPizzaKeyChain`
+        :class:`~.IPizzaProviderBase.KeyChain`
     Supported return urls:
         * ``return``
     Supported protocol version:
@@ -119,7 +121,15 @@ class LHVEEProvider(IPizzaProviderBase):
     """
     extra_fields = (('VK_CHARSET', 'UTF-8'),)
 
-class SEBEEProvider(IPizzaProviderBase):
+    @staticmethod
+    def from_config(data, extra={}):
+        dir = extra.get('dir', '')
+        pubkey = load_key(path.join(dir, data['pubkey']))
+        privkey = load_key(path.join(dir, data['key']), data.get('pass', None))
+        keychain = IPizzaProviderBase.KeyChain(privkey, pubkey)
+        return EELHVProvider(data['user'], keychain, data['endpoint'])
+
+class EESEBProvider(IPizzaProviderBase):
     """
     | AS SEB Pank
     | http://www.seb.ee
@@ -127,7 +137,7 @@ class SEBEEProvider(IPizzaProviderBase):
     Protocol
         IPizza
     KeyChain
-        :class:`~.IPizzaKeyChain`
+        :class:`~.IPizzaProviderBase.KeyChain`
     Supported return urls:
         * ``return``
     Supported protocol version:
@@ -135,7 +145,15 @@ class SEBEEProvider(IPizzaProviderBase):
     """
     extra_fields = (('VK_CHARSET', 'UTF-8'),)
 
-class SwedBankEEProvider(IPizzaProviderBase):
+    @staticmethod
+    def from_config(data, extra={}):
+        dir = extra.get('dir', '')
+        pubkey = load_key(path.join(dir, data['pubkey']))
+        privkey = load_key(path.join(dir, data['key']), data.get('pass', None))
+        keychain = IPizzaProviderBase.KeyChain(privkey, pubkey)
+        return EELHVProvider(data['user'], keychain, data['endpoint'])
+
+class EESwedBankProvider(IPizzaProviderBase):
     """
     | SWEDBANK AS
     | https://www.swedbank.ee
@@ -143,10 +161,19 @@ class SwedBankEEProvider(IPizzaProviderBase):
     Protocol
         IPizza
     KeyChain
-        :class:`~.IPizzaKeyChain`
+        :class:`~.IPizzaProviderBase.KeyChain`
     Supported return urls:
         * ``return``
     Supported protocol version:
         * ``0003``
     """
     extra_fields = (('VK_ENCODING', 'UTF-8'),)
+
+    @staticmethod
+    def from_config(data, extra={}):
+        dir = extra.get('dir', '')
+        pubkey = load_key(path.join(dir, data['pubkey']))
+        privkey = load_key(path.join(dir, data['key']), data.get('pass', None))
+        keychain = IPizzaProviderBase.KeyChain(privkey, pubkey)
+        return EELHVProvider(data['user'], keychain, data['endpoint'])
+
