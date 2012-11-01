@@ -91,7 +91,7 @@ class NordeaEEProvider(ProviderBase):
         # Save worthwhile data from the response
         data = {}
         for key in ('REF', 'PAID'):
-            item = data.get('RETURN_%s' % key, None)
+            item = form.get('RETURN_%s' % key, None)
             if item != None:
                 data[key] = item
         return PaymentResponse(self, data, success)
