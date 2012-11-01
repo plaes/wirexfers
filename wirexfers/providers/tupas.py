@@ -16,7 +16,7 @@ from ..exc import InvalidResponseError
 # Currently only single bank implemented, therefore no generic TUPAS/Solo
 # protocol implementation available.
 
-def MAC_hash(mac_str):
+def _MAC_hash(mac_str):
     """
     Returns MAC hash value in uppercase hexadecimal form and truncated to
     32 characters.
@@ -77,7 +77,7 @@ class NordeaEEProvider(ProviderBase):
         f = lambda x: dict(fields).get(x)
         k = ('VERSION', 'STAMP', 'RCV_ID', 'AMOUNT', 'REF', 'DATE', 'CUR')
         m = '%s&%s&' % ('&'.join(map(f, k)), self.keychain.mac_key)
-        fields.append(('MAC', MAC_hash(m)))
+        fields.append(('MAC', _MAC_hash(m)))
         return fields
 
     def parse_response(self, form, success=False):
@@ -86,7 +86,7 @@ class NordeaEEProvider(ProviderBase):
         f = lambda x: form.get('RETURN_%s' % x, '')
         k = ('VERSION', 'STAMP', 'REF', 'PAID')
         m = '%s&%s&' % ('&'.join(map(f, k)), self.keychain.mac_key)
-        if MAC_hash(m) != form.get('RETURN_MAC'):
+        if _MAC_hash(m) != form.get('RETURN_MAC'):
             raise InvalidResponseError
         # Save worthwhile data from the response
         data = {}
