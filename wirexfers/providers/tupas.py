@@ -41,11 +41,6 @@ class EENordeaProvider(ProviderBase):
         * ``0003``
     """
 
-    @staticmethod
-    def from_config(data, extra={}):
-        keychain = EENordeaProvider.KeyChain(data['key'])
-        return EENordeaProvider(data['user'], keychain, data['endpoint'])
-
     class KeyChain(KeyChainBase):
         def __init__(self, mac_key):
             #: MAC key provided by bank, used for signing and verifying payment data

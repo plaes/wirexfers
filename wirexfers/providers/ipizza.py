@@ -121,14 +121,6 @@ class EELHVProvider(IPizzaProviderBase):
     """
     extra_fields = (('VK_CHARSET', 'UTF-8'),)
 
-    @staticmethod
-    def from_config(data, extra={}):
-        dir = extra.get('dir', '')
-        pubkey = load_key(path.join(dir, data['pubkey']))
-        privkey = load_key(path.join(dir, data['key']), data.get('pass', None))
-        keychain = IPizzaProviderBase.KeyChain(privkey, pubkey)
-        return EELHVProvider(data['user'], keychain, data['endpoint'])
-
 class EESEBProvider(IPizzaProviderBase):
     """
     | AS SEB Pank
@@ -145,14 +137,6 @@ class EESEBProvider(IPizzaProviderBase):
     """
     extra_fields = (('VK_CHARSET', 'UTF-8'),)
 
-    @staticmethod
-    def from_config(data, extra={}):
-        dir = extra.get('dir', '')
-        pubkey = load_key(path.join(dir, data['pubkey']))
-        privkey = load_key(path.join(dir, data['key']), data.get('pass', None))
-        keychain = IPizzaProviderBase.KeyChain(privkey, pubkey)
-        return EELHVProvider(data['user'], keychain, data['endpoint'])
-
 class EESwedBankProvider(IPizzaProviderBase):
     """
     | SWEDBANK AS
@@ -168,12 +152,3 @@ class EESwedBankProvider(IPizzaProviderBase):
         * ``0003``
     """
     extra_fields = (('VK_ENCODING', 'UTF-8'),)
-
-    @staticmethod
-    def from_config(data, extra={}):
-        dir = extra.get('dir', '')
-        pubkey = load_key(path.join(dir, data['pubkey']))
-        privkey = load_key(path.join(dir, data['key']), data.get('pass', None))
-        keychain = IPizzaProviderBase.KeyChain(privkey, pubkey)
-        return EELHVProvider(data['user'], keychain, data['endpoint'])
-
