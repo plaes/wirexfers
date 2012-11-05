@@ -8,6 +8,7 @@ IPizza protocol implementations.
 from time import time
 from base64 import b64encode, b64decode
 
+from Crypto import Random
 from Crypto.Hash import SHA
 from Crypto.Signature import PKCS1_v1_5
 
@@ -85,6 +86,9 @@ class IPizzaProviderBase(ProviderBase):
         if not resp and resp not in fields:
             raise InvalidResponseError
         success = resp == '1101'
+
+        Random.atfork()
+
         # Parse and validate MAC
         m = self._build_mac(fields[resp], form)
         f = lambda x: form.get('VK_%s' % x)

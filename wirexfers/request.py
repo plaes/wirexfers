@@ -6,6 +6,8 @@ wirexfers.request
 This module implements a PaymentRequest class which provides us the
 payment request forms.
 """
+from Crypto import Random
+
 class PaymentInfo(object):
     """Payment information required for :class:`~.PaymentRequest`."""
     def __init__(self, amount, message, refnum):
@@ -42,6 +44,8 @@ class PaymentRequest(object):
 
         if 'return' not in return_urls:
             raise ValueError
+
+        Random.atfork()
 
         #: List containing ``(name, value)`` tuples for HTML form setup.
         self.form = provider._sign_request(info, return_urls)
