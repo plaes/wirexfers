@@ -156,3 +156,9 @@ class EESwedBankProvider(IPizzaProviderBase):
         * ``0003``
     """
     extra_fields = (('VK_ENCODING', 'UTF-8'),)
+
+    @staticmethod
+    def _build_mac(fields, data):
+        """Build MAC string."""
+        f = lambda x: data.get('VK_%s' % x)
+        return u''.join(map(lambda k: '%03d%s' % (len(f(k)), f(k)), fields)).encode('utf-8')
