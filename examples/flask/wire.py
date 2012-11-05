@@ -1,13 +1,13 @@
 from flask import Flask, render_template, redirect, request, url_for
 from wirexfers import PaymentInfo, utils
-from wirexfers.providers.tupas import SoloKeyChain, NordeaEEProvider
+from wirexfers.providers.tupas import NordeaEEProvider
 
 app = Flask(__name__)
 
 # Replace the '<mac>' argument below!
-keychain = SoloKeyChain(<mac>)
+keychain = NordeaEEProvider.KeyChain('<mac>')
 # Replace the <user> and <endpoint> arguments below!
-provider = NordeaEEProvider(<user>, keychain, <endpoint>)
+provider = NordeaEEProvider('<user>', keychain, '<endpoint>')
 
 @app.route('/')
 def index():
