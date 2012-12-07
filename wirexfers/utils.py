@@ -27,9 +27,6 @@ def ref_731(n):
     :param string n: base number (client id, etc)
     :rtype: string
     """
-
     return "%s%d" % (n,((10 - (sum(map(\
                     lambda l: int(n[-l])*(7,3,1)[(l-1) % 3], \
                     xrange(1, len(n)+1))))) % 10))
-
-
