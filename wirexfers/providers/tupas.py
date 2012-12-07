@@ -79,7 +79,7 @@ class EENordeaProvider(ProviderBase):
         fields.append(('MAC', _MAC_hash(m)))
         return fields
 
-    def parse_response(self, form, success=False):
+    def parse_response(self, form, success=True):
         """Parse and return payment response."""
         # MAC calculation
         f = lambda x: form.get('RETURN_%s' % x, '')

@@ -70,7 +70,7 @@ class IPizzaProviderBase(ProviderBase):
         fields.append(('VK_RETURN', return_urls['return']))
         return fields
 
-    def parse_response(self, form, success=False):
+    def parse_response(self, form, success=True):
         """Parse and return payment response."""
         fields = {
             # Successful payment
