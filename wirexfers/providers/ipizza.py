@@ -106,6 +106,28 @@ class IPizzaProviderBase(ProviderBase):
         f = lambda x: data.get('VK_%s' % x)
         return u''.join(map(lambda k: '%03d%s' % (len(f(k).encode('utf-8')), f(k)), fields)).encode('utf-8')
 
+class EEKrediidipankProvider(IPizzaProviderBase):
+    """
+    | AS Eesti Krediidipank
+    | http://krediidipank.ee/
+
+    Protocol
+        IPizza
+    KeyChain
+        :class:`~.IPizzaProviderBase.KeyChain`
+    Supported return urls:
+        * ``return``
+    Supported protocol version:
+        * ``0003``
+    """
+    extra_fields = (('VK_CHARSET', 'UTF-8'),)
+
+    @staticmethod
+    def _build_mac(fields, data):
+        """Build MAC string. Length is in bytes instead of symbols."""
+        f = lambda x: data.get('VK_%s' % x)
+        return u''.join(map(lambda k: '%03d%s' % (len(f(k)), f(k)), fields)).encode('utf-8')
+
 class EELHVProvider(IPizzaProviderBase):
     """
     | AS LHV Pank
