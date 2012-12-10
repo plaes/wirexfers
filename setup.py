@@ -16,6 +16,7 @@ os.environ['PYTHONDONTWRITEBYTECODE'] = '1'
 
 packages = [
     'wirexfers',
+    'wirexfers.providers',
 ]
 
 requires = [
