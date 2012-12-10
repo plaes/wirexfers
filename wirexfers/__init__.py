@@ -12,7 +12,7 @@ Solo/TUPAS).
 """
 
 __title__ = 'wirexfers'
-__version__ = '0.0'
+__version__ = '0.1'
 __author__ = 'Priit Laes'
 __license__ = 'ISC'
 __copyright__ = 'Copyright 2012 Priit Laes'
