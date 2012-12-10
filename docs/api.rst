@@ -17,6 +17,12 @@ IPizza
 IPizza Providers
 ................
 
+.. autoclass:: wirexfers.providers.ipizza.EEDanskeProvider
+   :inherited-members:
+
+.. autoclass:: wirexfers.providers.ipizza.EEKrediidipankProvider
+   :inherited-members:
+
 .. autoclass:: wirexfers.providers.ipizza.EELHVProvider
    :inherited-members:
 
