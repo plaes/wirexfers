@@ -15,9 +15,6 @@ from Crypto.Signature import PKCS1_v1_5
 from . import KeyChainBase, ProviderBase
 from .. import PaymentResponse
 from ..exc import InvalidResponseError
-from ..utils import load_key
-
-from os import path
 
 class IPizzaProviderBase(ProviderBase):
     """Base class for IPizza protocol provider.
@@ -159,6 +156,6 @@ class EESwedBankProvider(IPizzaProviderBase):
 
     @staticmethod
     def _build_mac(fields, data):
-        """Build MAC string."""
+        """Build MAC string. Length is in bytes instead of symbols."""
         f = lambda x: data.get('VK_%s' % x)
         return u''.join(map(lambda k: '%03d%s' % (len(f(k)), f(k)), fields)).encode('utf-8')
