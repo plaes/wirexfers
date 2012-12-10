@@ -10,15 +10,18 @@ WireXfers, but might be also useful externally.
 from Crypto.PublicKey import RSA
 
 def load_key(path, password=None):
-     """Import an RSA key (private or public half).
+    """Import an RSA key (private or public half).
 
-     :param string path: path to key half.
-     :param password: password for private key.
-     :type password: string or None
-     :rtype: :py:class:`Crypto.PublicKey.RSA._RSAobj`
-     """
-     with open(path, 'r') as f:
-         return RSA.importKey(f.read(), password)
+    :param string path: path to key half.
+    :param password: password for private key.
+    :type password: string or None
+    :rtype: :py:class:`Crypto.PublicKey.RSA._RSAobj`
+    """
+    with open(path, 'r') as f:
+        key = RSA.importKey(f.read(), password)
+        if not key:
+            raise RuntimeError('Invalid key file: "%s"\n' % path)
+        return key
 
 def ref_731(n):
     """Reference number calculator. Returns reference number
