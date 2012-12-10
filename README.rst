@@ -12,13 +12,19 @@ Features
 
   * IPizza
 
-    * LHV Bank (Estonia)
-    * SEB Bank (Estonia)
-    * SwedBank (Estonia)
+    * Estonia:
+
+        * Danske Bank
+        * Krediidipank
+        * LHV Bank
+        * SEB Bank
+        * SwedBank
 
   * Solo/TUPAS
 
-    * Nordea Bank (Estonia)
+    * Estonia:
+
+        * Nordea Bank (Estonia)
 
 Installation
 ------------
@@ -38,10 +44,10 @@ Usage example
 
 Basic usage in pseudocode: ::
 
-    # Set up provider-specific keychain
-    keychain = KeyChain(...)
+    # Create provider-specific keychain...
+    keychain = PaymentProtocol.KeyChain(...)
 
-    # Configuring the provider
+    # ...and initialize the provider
     provider = PaymentProtocol(user, keychain, endpoint)
 
     # Creating the payment request
