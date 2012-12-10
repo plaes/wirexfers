@@ -8,6 +8,7 @@ History
 
 * First release!
 * Added Estonian banks:
+
   * Danske bank (IPizza)
   * Krediidipank (IPizza)
   * LHV pank  (IPizza)
