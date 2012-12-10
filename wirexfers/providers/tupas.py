@@ -40,6 +40,7 @@ class EENordeaProvider(ProviderBase):
     Supported protocol version:
         * ``0003``
     """
+    form_charset = 'UTF-8'
 
     class KeyChain(KeyChainBase):
         def __init__(self, mac_key):

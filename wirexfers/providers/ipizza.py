@@ -28,6 +28,7 @@ class IPizzaProviderBase(ProviderBase):
     Supported protocol version:
         * ``008``
     """
+    form_charset = 'UTF-8'
 
     class KeyChain(KeyChainBase):
 
@@ -105,6 +106,28 @@ class IPizzaProviderBase(ProviderBase):
         """Build MAC string ('003one003two') for required fields."""
         f = lambda x: data.get('VK_%s' % x)
         return u''.join(map(lambda k: '%03d%s' % (len(f(k).encode('utf-8')), f(k)), fields)).encode('utf-8')
+
+class EEDanskeProvider(IPizzaProviderBase):
+    """
+    | Danske Bank A/S Eesti filiaal
+    | http://www.danskebank.ee
+
+    Protocol
+        IPizza
+    KeyChain
+        :class:`~.IPizzaProviderBase.KeyChain`
+    Supported return urls:
+        * ``return``
+    Supported protocol version:
+        * ``0003``
+    """
+    form_charset = 'ISO-8859-1'
+
+    @staticmethod
+    def _build_mac(fields, data):
+        """Build MAC string. Length is in bytes instead of symbols."""
+        f = lambda x: data.get('VK_%s' % x).encode('latin', 'ignore')
+        return ''.join(map(lambda k: '%03d%s' % (len(f(k)), f(k)), fields))
 
 class EEKrediidipankProvider(IPizzaProviderBase):
     """
