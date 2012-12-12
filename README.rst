@@ -2,10 +2,13 @@ WireXfers [waɪə trænsfɜːz]
 ==========================
 
 WireXfers is an online payments library, written in Python, supporting
-various online payment protocols (IPizza, Solo/TUPAS) using a simple API.
+various online payment protocols (IPizza, Solo/TUPAS) using a simple API,
+making it easily integratable with various web frameworks (Flask_, ...).
 
-This library is written by `Priit Laes`_ with support from procom.ee_,
-Povi_ and ScienceMosaic_.
+.. _Flask: https://github.com/plaes/wirexfers-flask-demo
+
+WireXfers is written by `Priit Laes`_ with support from procom.ee_, Povi_ and
+ScienceMosaic_.
 
 .. _Priit Laes: http://plaes.org
 .. _procom.ee: http://procom.ee
