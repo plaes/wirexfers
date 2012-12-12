@@ -4,6 +4,14 @@ WireXfers [waɪə trænsfɜːz]
 WireXfers is an online payments library, written in Python, supporting
 various online payment protocols (IPizza, Solo/TUPAS) using a simple API.
 
+This library is written by `Priit Laes`_ with support from procom.ee_,
+Povi_ and ScienceMosaic_.
+
+.. _Priit Laes: http://plaes.org
+.. _procom.ee: http://procom.ee
+.. _Povi: http://povi.ee
+.. _ScienceMosaic: http://teadusmosaiik.ee
+
 Features
 --------
 
@@ -24,7 +32,7 @@ Features
 
     * Estonia:
 
-        * Nordea Bank (Estonia)
+        * Nordea Bank
 
 Installation
 ------------
