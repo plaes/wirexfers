@@ -26,6 +26,15 @@ WireTransfers library.
    user/usage
    user/providers
 
+Integrating with frameworks
+---------------------------
+
+Integration examples with various frameworks.
+
+- Flask_ - https://github.com/plaes/wirexfers-flask-demo
+
+.. _Flask: https://github.com/plaes/wirexfers-flask-demo
+
 API Documentation
 -----------------
 
