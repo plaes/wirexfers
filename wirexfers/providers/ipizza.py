@@ -119,7 +119,7 @@ class EEDanskeProvider(IPizzaProviderBase):
     Supported return urls:
         * ``return``
     Supported protocol version:
-        * ``0003``
+        * ``008``
     """
     form_charset = 'ISO-8859-1'
 
@@ -141,7 +141,7 @@ class EEKrediidipankProvider(IPizzaProviderBase):
     Supported return urls:
         * ``return``
     Supported protocol version:
-        * ``0003``
+        * ``008``
     """
     extra_fields = (('VK_CHARSET', 'UTF-8'),)
 
@@ -163,7 +163,7 @@ class EELHVProvider(IPizzaProviderBase):
     Supported return urls:
         * ``return``
     Supported protocol version:
-        * ``0003``
+        * ``008``
     """
     extra_fields = (('VK_CHARSET', 'UTF-8'),)
 
@@ -179,7 +179,7 @@ class EESEBProvider(IPizzaProviderBase):
     Supported return urls:
         * ``return``
     Supported protocol version:
-        * ``0003``
+        * ``008``
     """
     extra_fields = (('VK_CHARSET', 'UTF-8'),)
 
@@ -195,7 +195,7 @@ class EESwedBankProvider(IPizzaProviderBase):
     Supported return urls:
         * ``return``
     Supported protocol version:
-        * ``0003``
+        * ``008``
     """
     extra_fields = (('VK_ENCODING', 'UTF-8'),)
 
