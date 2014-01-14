@@ -29,7 +29,7 @@ WireTransfers library.
 Integrating with frameworks
 ---------------------------
 
-Integration examples with various frameworks.
+Integration examples with various frameworks:
 
 - Flask_ - https://github.com/plaes/wirexfers-flask-demo
 

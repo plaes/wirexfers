@@ -1,6 +1,8 @@
 WireXfers [waɪə trænsfɜːz]
 ==========================
 
+.. image:: https://raw.github.com/plaes/wirexfers/master/docs/_static/wiretransfers-logo.png
+
 WireXfers is an online payments library, written in Python, supporting
 various online payment protocols (IPizza, Solo/TUPAS) using a simple API,
 making it easily integratable with various web frameworks (Flask_, ...).
