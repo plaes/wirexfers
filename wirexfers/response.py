@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-wirexfers.response
-~~~~~~~~~~~~~~~~~~
+    wirexfers.response
+    ~~~~~~~~~~~~~~~~~~
 
-This module implements a PaymentResponse class used for payment validation.
+    This module implements a PaymentResponse class used for payment validation.
+
+    :copyright: (c) 2012-2014 Priit Laes
+    :license: ISC, see LICENSE for more details.
 """
 
 class PaymentResponse(object):

@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-wirexfers.utils
-~~~~~~~~~~~~~~~
+    wirexfers.utils
+    ~~~~~~~~~~~~~~~
 
-This module provides utility functions that are used within
-WireXfers, but might be also useful externally.
+    This module provides utility functions that are used within
+    WireXfers, but might be also useful externally.
 
+    :copyright: (c) 2012-2014 Priit Laes
+    :license: ISC, see LICENSE for more details.
 """
 from Crypto.PublicKey import RSA
 

@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-wirexfers.exc
-~~~~~~~~~~~~~
+    wirexfers.exc
+    ~~~~~~~~~~~~~
 
-Exceptions used with WireXfers.
+    Exceptions used with WireXfers.
 
-The base exception class is :class:`.WireXfersError`
+    The base exception class is :class:`.WireXfersError`
+
+    :copyright: (c) 2012-2014 Priit Laes
+    :license: ISC, see LICENSE for more details.
 """
 
 class WireXfersError(Exception):

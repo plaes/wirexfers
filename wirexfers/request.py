@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-wirexfers.request
-~~~~~~~~~~~~~~~~~
+    wirexfers.request
+    ~~~~~~~~~~~~~~~~~
 
-This module implements a PaymentRequest class which provides us the
-payment request forms.
+    This module implements a PaymentRequest class which provides us the
+    payment request forms.
+
+    :copyright: (c) 2012-2014 Priit Laes
+    :license: ISC, see LICENSE for more details.
 """
 class PaymentInfo(object):
     """Payment information required for :class:`~.PaymentRequest`."""
