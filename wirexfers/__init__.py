@@ -12,7 +12,7 @@
 """
 
 __title__ = 'wirexfers'
-__version__ = '2014.07.01'
+__version__ = '2014.06-dev'
 __author__ = 'Priit Laes'
 __license__ = 'ISC'
 __copyright__ = 'Copyright 2012-2014 Priit Laes'
