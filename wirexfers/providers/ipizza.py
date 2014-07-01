@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-wirexfers.protocols.ipizza
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+    wirexfers.protocols.ipizza
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-IPizza protocol implementations.
+    IPizza protocol implementations.
+
+    :copyright: (c) 2012-2014, Priit Laes
+    :license: ISC, see LICENSE for more details.
 """
 from time import time
 from base64 import b64encode, b64decode

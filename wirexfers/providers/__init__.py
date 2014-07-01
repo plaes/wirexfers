@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-wirexfers.provider
-~~~~~~~~~~~~~~~~~~
+    wirexfers.provider
+    ~~~~~~~~~~~~~~~~~~
 
-Base classes for implementing payment providers.
+    Base classes for implementing payment providers.
+
+    :copyright: (c) 2012-2014, Priit Laes
+    :license: ISC, see LICENSE for more details.
 """
 from wirexfers import PaymentRequest
 
