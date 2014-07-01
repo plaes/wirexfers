@@ -3,7 +3,7 @@
 wirexfers.provider
 ~~~~~~~~~~~~~~~~~~
 
-This module contains the payment provider implementations.
+Base classes for implementing payment providers.
 """
 from wirexfers import PaymentRequest
 
@@ -13,7 +13,7 @@ class KeyChainBase(object):
         raise NotImplementedError('Provider should implement its own keychain.')
 
 class ProviderBase(object):
-    """Base class that all provider implementations derive from."""
+    """Base class for all payment providers."""
 
     def __init__(self, user, keychain, endpoint, extra_info={}):
 
@@ -33,7 +33,7 @@ class ProviderBase(object):
 
     def __call__(self, payment, return_urls):
         """
-        Creates and returns a payment request.
+        Create and return a payment request.
 
         :param payment: payment information
         :type payment: :class:`~wirexfers.PaymentInfo`
@@ -42,12 +42,12 @@ class ProviderBase(object):
         return PaymentRequest(self, payment, return_urls)
 
     def parse_response(self, data):
-        """Parses the payment request.
+        """Parse the payment request.
 
         :param form: Raw payment response data.
         """
         raise NotImplementedError('Provider should implement its own response handler')
 
     def _sign_request(self, info, return_urls):
-        """Signs the payment request."""
+        """Sign the payment request."""
         raise NotImplementedError('Provider should implement its own signing')
